@@ -4,6 +4,7 @@ import { TasksService } from './tasks/tasks.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {ConfigModule} from "@nestjs/config";
 import {DataSource} from "typeorm";
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -20,6 +21,7 @@ import {DataSource} from "typeorm";
         synchronize: true
       }),
       TasksModule,
+      AuthModule,
   ],
   providers: [TasksService],
 })
