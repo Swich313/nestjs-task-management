@@ -7,10 +7,12 @@ import {GetTasksFilterDto} from "./dto/get-tasks-filter.dto";
 import {AuthGuard} from "@nestjs/passport";
 import {GetUser} from "../auth/get-user.decorator";
 import {User} from "../auth/user.entity";
+import {Logger} from '@nestjs/common';
 
 @Controller('tasks')
 @UseGuards(AuthGuard('jwt'))
 export class TasksController {
+    private logger = new Logger('TasksController');
     constructor(
         @Inject(TasksService)
         private tasksService: TasksService
@@ -21,7 +23,8 @@ export class TasksController {
         @Query() filterDto: GetTasksFilterDto,
         @GetUser() user: User
     ): Promise<Task[]> {
-        return this.tasksService.getTasks(filterDto, user)
+        this.logger.verbose(`User "${user.username}" retrieving all tasks with filters: ${JSON.stringify(filterDto)}`);
+        return this.tasksService.getTasks(filterDto, user);
     }
 
 
@@ -39,6 +42,7 @@ export class TasksController {
         @Body() createTaskDto: CreateTaskDto,
         @GetUser() user: User
     ): Promise<Task> {
+        this.logger.verbose(`User "${user.username}" creating a new task. Data: ${JSON.stringify(createTaskDto)}`);
         return this.tasksService.createTask(createTaskDto, user);
     }
     //
@@ -54,7 +58,7 @@ export class TasksController {
         @GetUser() user: User
     ): Promise<Task> {
         const {status} = updateTaskStatusDto;
-        return this.tasksService.updateTaskStatus(id, status, user)
+        return this.tasksService.updateTaskStatus(id, status, user);
     }
 
 }
