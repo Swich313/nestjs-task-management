@@ -4,6 +4,9 @@ import {ValidationPipe} from "@nestjs/common";
 import {TransformInterceptor} from "./transform.interceptor";
 import {Logger} from "@nestjs/common";
 
+console.log(`.env.stage.${process.env.STAGE}`)
+
+
 async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);

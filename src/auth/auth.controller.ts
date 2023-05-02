@@ -6,7 +6,7 @@ import {AuthService} from "./auth.service";
 export class AuthController {
     constructor(
         @Inject(AuthService)
-        private authService: AuthService
+        private authService: AuthService,
     ) {}
 
     @Post('/signup')
@@ -18,6 +18,4 @@ export class AuthController {
     login(@Body() authCredentialsDto: AuthCredentialsDto): Promise<{accessToken: string}> {
         return this.authService.login(authCredentialsDto);
     }
-
-
 }
